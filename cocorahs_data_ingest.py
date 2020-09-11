@@ -1,3 +1,7 @@
+"""
+Copied from https://github.com/akrherz/iem/tree/master/scripts/ingestors/cocorahs on 2020-09-11
+"""
+
 """ Process CoCoRaHS Stations!"""
 import sys
 import datetime
