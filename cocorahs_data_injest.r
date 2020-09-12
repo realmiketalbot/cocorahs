@@ -12,7 +12,7 @@ station = readLines(".pgcredentials/cocorahs")[8]
 
 now = strftime(now(), format="%m/%d/%Y")
 
-url = sprintf("http://data.cocorahs.org/export/exportreports.aspx?ReportType=Daily&dtf=1&Format=CSV&State=%s&County=%s&ReportDateType=reportdate&Date=%s&TimesInGMT=False", 
+url = sprintf("http://data.cocorahs.org/export/exportreports.aspx?ReportType=Daily&dtf=1&Format=CSV&State=%s&County=%s&ReportDateType=reportdate&Date=%s&TimesInGMT=True", 
               state, county, now)
 
 download.file(url, method = "wget", destfile="data.csv")
@@ -31,7 +31,8 @@ get.data <- read_csv("data.csv",
                                       col_double(),
                                       col_character()))
 
-get.data$ObservationTime <- strftime(as_datetime(get.data$ObservationDate), format="%H:%M")
+get.data$ObservationTime <- strftime(as_datetime(get.data$ObservationTime), format="%H:%M")
+names(get.data) <- str_to_lower(names(get.data))
 
 # Fetch data in database for comparison
 host = readLines(".pgcredentials/cocorahs")[1]
@@ -51,7 +52,7 @@ if (station != ""){
   source("cocorahs_stations.r")
   stations <- dbReadTable(con, "cocorahs_stations") %>% as_tibble()
   if (station %in% stations$StationNumber) {
-    get.data <- filter(get.data, StationNumber==station)
+    get.data <- filter(get.data, stationnumber==station)
   } else {
     print(sprintf("Station %s not found!", station))
   }
