@@ -58,6 +58,8 @@ if (station != ""){
   }
 }
 
+get.data$totalprecipamt[is.na(get.data$totalprecipamt)] <- 0
+
 old.data <- dbReadTable(con, "cocorahs") %>% as_tibble() %>% dplyr::select(-id)
 
 new.data <- setdiff(get.data, old.data)
