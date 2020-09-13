@@ -4,11 +4,11 @@ library(tidyverse)
 library(lubridate)
 library(RPostgreSQL)
 
-state = readLines(".pgcredentials/cocorahs")[6]
-county = readLines(".pgcredentials/cocorahs")[7]
+state = readLines("~/.pg-credentials/cocorahs")[6]
+county = readLines("~/.pg-credentials/cocorahs")[7]
 
 #Filter by station (set to "" to get data for all stations)
-station = readLines(".pgcredentials/cocorahs")[8]
+station = readLines("~/.pg-credentials/cocorahs")[8]
 
 now = strftime(now(), format="%m/%d/%Y")
 
@@ -35,11 +35,11 @@ get.data$ObservationTime <- strftime(as_datetime(get.data$ObservationTime), form
 names(get.data) <- str_to_lower(names(get.data))
 
 # Fetch data in database for comparison
-host = readLines(".pgcredentials/cocorahs")[1]
-port = readLines(".pgcredentials/cocorahs")[2]
-base = readLines(".pgcredentials/cocorahs")[3]
-user = readLines(".pgcredentials/cocorahs")[4]
-pass = readLines(".pgcredentials/cocorahs")[5]
+host = readLines("~/.pg-credentials/cocorahs")[1]
+port = readLines("~/.pg-credentials/cocorahs")[2]
+base = readLines("~/.pg-credentials/cocorahs")[3]
+user = readLines("~/.pg-credentials/cocorahs")[4]
+pass = readLines("~/.pg-credentials/cocorahs")[5]
 
 driv = dbDriver("PostgreSQL")
 
